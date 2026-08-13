@@ -17,11 +17,6 @@ app.get('/', (req, res) => {
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/items', require('./routes/itemRoutes'));
 
-
-app.get('/', (req, res) => {
-  res.send('Inventory Management API Running...');
-});
-
 app.use((req, res, next) => {
   const error = new Error(`Not Found - ${req.originalUrl}`);
   res.status(404);
