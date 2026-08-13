@@ -1,3 +1,4 @@
+import { API_BASE_URL } from '../config';
 import React, { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 
@@ -20,12 +21,12 @@ const Dashboard = ({ onNavigateToItems }) => {
 
   const fetchDashboardStats = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/items/dashboard', {
+      const res = await fetch(`${API_BASE_URL}/api/items/dashboard`); {
         headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
+          'Authorization'; `Bearer ${token}`,
+          'Content-Type'; 'application/json'
         }
-      });
+      };
 
       const data = await response.json();
 
@@ -35,7 +36,6 @@ const Dashboard = ({ onNavigateToItems }) => {
 
       setStats(data);
 
-      // Check for Low Stock / Out of Stock items and generate alerts
       const lowStockItems = data.recentItems.filter(item => item.quantity <= item.threshold);
       if (lowStockItems.length > 0) {
         setAlerts(lowStockItems);

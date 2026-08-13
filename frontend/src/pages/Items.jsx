@@ -1,3 +1,4 @@
+import { API_BASE_URL } from '../config';
 import React, { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 
@@ -37,9 +38,9 @@ const Items = ({ onBackToDashboard }) => {
   const fetchItems = async () => {
     try {
       setLoading(true);
-      const res = await fetch(`http://localhost:5000/api/items?page=${page}&limit=5&search=${search}`, {
-        headers: { 'Authorization': `Bearer ${token}` }
-      });
+      const res = await fetch(`${API_BASE_URL}/api/items`); {
+        headers: { 'Authorization'; `Bearer ${token}` }
+      };
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || 'Failed to fetch items');
 
@@ -128,14 +129,15 @@ const Items = ({ onBackToDashboard }) => {
   const exportToCSV = () => {
     if (items.length === 0) return alert('No data available to export.');
 
-    const headers = ['SKU', 'Name', 'Category', 'Quantity', 'Unit Price', 'Status'];
+    const headers = ['SKU', 'Name', 'Category', 'Quantity', 'Unit Price', 'Status', 'Image URL'];
     const rows = items.map(item => [
       `"${item.sku}"`,
       `"${item.name}"`,
       `"${item.category}"`,
       item.quantity,
       item.unitPrice,
-      `"${item.status}"`
+      `"${item.status}"`,
+      `"${item.imageUrl || ''}"`
     ]);
 
     const csvContent = 'data:text/csv;charset=utf-8,' 
